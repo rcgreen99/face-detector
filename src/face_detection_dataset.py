@@ -1,4 +1,7 @@
+from __future__ import annotations
+import os
 from torch.utils.data import Dataset
+from src.annotation import Annotation
 
 
 class FaceDetectionDataset(Dataset):
@@ -12,3 +15,12 @@ class FaceDetectionDataset(Dataset):
 
     def __getitem__(self, index):
         return self.annotations[index]
+
+    def load_data(self):
+        for index, line in enumerate(open(self.datafile)):
+            if index < 1:
+                continue
+            parts = line.split()
+            image_path = os.path.join(self.img_dir, parts[0])
+            annotation = Annotation(image_path, parts[1], parts[2], parts[3], parts[4])
+            self.annotations.append(annotation)
