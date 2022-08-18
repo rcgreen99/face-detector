@@ -22,5 +22,7 @@ class FaceDetectionDataset(Dataset):
                 continue
             parts = line.split()
             image_path = os.path.join(self.img_dir, parts[0])
-            annotation = Annotation(image_path, parts[1], parts[2], parts[3], parts[4])
+            annotation = Annotation(
+                image_path, int(parts[1]), int(parts[2]), int(parts[3]), int(parts[4])
+            )
             self.annotations.append(annotation)
