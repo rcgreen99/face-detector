@@ -66,15 +66,19 @@ class Annotation:
             # check if enough room to crop
             delta = (new_height - size) / 2
             image = image.crop((0, delta, size, new_height - delta))
-            self.top_left_y -= delta
-            self.bottom_right_y -= delta
+            self.translate_bbox(0, -delta)
         else:
             delta = (new_width - size) / 2
             image = image.crop((delta, 0, new_width - delta, size))
-            self.top_left_x -= delta
-            self.bottom_right_x -= delta
+            self.translate_bbox(-delta, 0)
 
         return image
+
+    def translate_bbox(self, x, y):
+        self.top_left_x += x
+        self.top_left_y += y
+        self.bottom_right_x += x
+        self.bottom_right_y += y
 
     def __str__(self):
         return f"annotation {self.image_path} ({self.top_left_x}, {self.top_left_y}, {self.bottom_right_x}, {self.bottom_right_y})"
