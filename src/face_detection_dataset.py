@@ -9,6 +9,7 @@ class FaceDetectionDataset(Dataset):
         self.datafile = datafile
         self.img_dir = img_dir
         self.annotations = []
+        self._load_data()
 
     def __len__(self):
         return len(self.annotations)
@@ -16,7 +17,7 @@ class FaceDetectionDataset(Dataset):
     def __getitem__(self, index):
         return self.annotations[index]
 
-    def load_data(self):
+    def _load_data(self):
         for index, line in enumerate(open(self.datafile)):
             if index < 1:
                 continue

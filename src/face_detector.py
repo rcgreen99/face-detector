@@ -1,3 +1,7 @@
-class FaceDetector:
+import torch.nn as nn
+
+
+class FaceDetector(nn.Module):
     def __init__(self):
-        pass
+        super().__init__()
+        self.conv1 = nn.Conv2d(3, 6, 5)

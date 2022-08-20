@@ -1,12 +1,13 @@
 class Trainer:
-    def __init__(self, model, dataset, batch_size, epochs, patience, log_dir, seed):
+    def __init__(
+        self, model, train_dataloader, val_dataloader, batch_size, epochs, optimizer
+    ):
         self.model = model
-        self.dataset = dataset
+        self.train_dataloader = train_dataloader
+        self.val_dataloader = val_dataloader
         self.batch_size = batch_size
         self.epochs = epochs
-        self.patience = patience
-        self.log_dir = log_dir
-        self.seed = seed
+        self.optimizer = optimizer
 
     def run(self):
-        pass
+        print("Training...")

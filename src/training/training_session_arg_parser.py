@@ -7,8 +7,14 @@ class TrainingSessionArgParser(ArgumentParser):
         self.add_argument(
             "--dataset_path",
             type=str,
-            default="data/dataset.csv",
+            default="data/list_bbox_celeba.txt",
             help="path to master_dataset.csv file",
+        )
+        self.add_argument(
+            "--img_dir",
+            type=str,
+            default="data/imgs",
+            help="path to images directory",
         )
         self.add_argument(
             "--batch_size",
@@ -21,6 +27,18 @@ class TrainingSessionArgParser(ArgumentParser):
             type=int,
             default=4,
             help="number of full training passes over the entire dataset",
+        )
+        self.add_argument(
+            "--val_percent",
+            type=float,
+            default=0.20,
+            help="percentage of dataset to use for validation",
+        )
+        self.add_argument(
+            "--learning_rate",
+            type=float,
+            default=0.001,
+            help="learning rate for the optimizer",
         )
         self.add_argument(
             "--patience",
