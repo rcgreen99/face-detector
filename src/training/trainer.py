@@ -25,11 +25,11 @@ class Trainer:
         running_loss = 0.0
         self.model.train()  # sets model into train mode
         for batch_index, batch in enumerate(self.train_dataloader):
-            image = batch["image"]
-            target = batch["target"]
+            inputs = batch["inputs"].to(self.device)
+            targets = batch["targets"].to(self.device)
             self.model.zero_grad()  # zero out gradients
-            outputs = self.model(image)  # forward prop
-            loss = self.criterion(outputs, target)  # calculate loss
+            outputs = self.model(inputs)  # forward prop
+            loss = self.criterion(outputs, targets)  # calculate loss
             loss.backward()  # calculate gradients
             self.optimizer.step()  # update model parameters (via GD)
             running_loss += loss.item()

@@ -5,9 +5,10 @@ from src.annotation import Annotation
 
 
 class FaceDetectionDataset(Dataset):
-    def __init__(self, datafile, img_dir):
+    def __init__(self, datafile, img_dir, size=224):
         self.datafile = datafile
         self.img_dir = img_dir
+        self.size = size
         self.annotations = []
         self._load_data()
 
@@ -17,8 +18,8 @@ class FaceDetectionDataset(Dataset):
     def __getitem__(self, index):
         annotation = self.annotations[index]
         return {
-            "image": annotation.open_image(size=224),
-            "target": (
+            "inputs": annotation.open_image(size=self.size),
+            "targets": (
                 annotation.top_left_x,
                 annotation.top_left_y,
                 annotation.bottom_right_x,
