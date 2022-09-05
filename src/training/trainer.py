@@ -1,4 +1,5 @@
 from torch.nn import MSELoss
+import torch
 
 
 class Trainer:
@@ -11,15 +12,16 @@ class Trainer:
         self.batch_size = batch_size
         self.epochs = epochs
         self.optimizer = optimizer
+        self.criterion = MSELoss()
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     def run(self):
-        print("Training...")
+        print(f"Training on {self.device}...")
         for epoch in range(self.epochs):
             self.train(epoch)
             self.validate()
 
     def train(self, epoch):
-        criterion = MSELoss()
         running_loss = 0.0
         self.model.train()  # sets model into train mode
         for batch_index, batch in enumerate(self.train_dataloader):
@@ -27,7 +29,7 @@ class Trainer:
             target = batch["target"]
             self.model.zero_grad()  # zero out gradients
             outputs = self.model(image)  # forward prop
-            loss = criterion(outputs, target)  # calculate loss
+            loss = self.criterion(outputs, target)  # calculate loss
             loss.backward()  # calculate gradients
             self.optimizer.step()  # update model parameters (via GD)
             running_loss += loss.item()
