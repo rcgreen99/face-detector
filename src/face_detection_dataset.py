@@ -15,7 +15,16 @@ class FaceDetectionDataset(Dataset):
         return len(self.annotations)
 
     def __getitem__(self, index):
-        return self.annotations[index]
+        annotation = self.annotations[index]
+        return {
+            "image": annotation.open_image(size=224),
+            "target": (
+                annotation.top_left_x,
+                annotation.top_left_y,
+                annotation.bottom_right_x,
+                annotation.bottom_right_y,
+            ),
+        }
 
     def _load_data(self):
         for index, line in enumerate(open(self.datafile)):
